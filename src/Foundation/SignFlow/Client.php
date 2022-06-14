@@ -21,22 +21,27 @@ class Client extends BaseClient
         $url = '/api/v2/signflows/createFlowOneStep';
         return $this->request('json', [$url, $params]);
     }
+
     /**
      * 签署流程创建
      *
      * @param $businessScene
-     * @param $noticeDeveloperUrl
-     * @param $autoArchive
+     * @param null $noticeDeveloperUrl
+     * @param string $noticeType
+     * @param string $redirectUrl
+     * @param bool $autoArchive
      * @return Collection|null
      * @throws HttpException
      */
-    public function createSignFlow($businessScene, $noticeDeveloperUrl = null, $autoArchive = true): ?Collection
+    public function createSignFlow($businessScene, $noticeDeveloperUrl = null, string $noticeType = '', $redirectUrl = '', $autoArchive = true): ?Collection
     {
         $url = '/v1/signflows';
         $params = [
             'autoArchive' => $autoArchive,
             'businessScene' => $businessScene,
             'configInfo' => [
+                'noticeType' => $noticeType,
+                'redirectUrl' => $redirectUrl,
                 'noticeDeveloperUrl' => $noticeDeveloperUrl
             ]
         ];

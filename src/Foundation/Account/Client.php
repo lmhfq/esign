@@ -15,13 +15,13 @@ class Client extends BaseClient
      * @param $name
      * @param $idType string 证件类型, 默认: CRED_PSN_CH_IDCARD
      * @param $idNumber
-     * @param string $mobile
-     * @param string $email
+     * @param null $mobile
+     * @param null $email
      * @return Collection|null
      *
      * @throws HttpException
      */
-    public function createPersonAccount($thirdPartyUserId, $name, $idType, $idNumber, $mobile = null, $email = null): ?Collection
+    public function createPersonAccount($thirdPartyUserId, $name, string $idType = 'CRED_PSN_CH_IDCARD', $idNumber = null, $mobile = null, $email = null): ?Collection
     {
         $url = '/v1/accounts/createByThirdPartyUserId';
         $params = [
