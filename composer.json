@@ -1,0 +1,32 @@
+{
+    "name": "lmh/esign",
+    "description": "根据e签宝官方文档开发的一个 PHP 扩展包.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lmh",
+            "email": "lmh@weiyian.com"
+        }
+    ],
+    "require": {
+        "php":">=7.1.0",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "^6.5",
+        "monolog/monolog": "^1.22 || ^2.0",
+        "pimple/pimple": "^3.0",
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Lmh\\ESign\\": "src"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}
