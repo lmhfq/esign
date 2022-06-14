@@ -8,6 +8,21 @@ use Lmh\ESign\Support\Collection;
 
 class Client extends BaseClient
 {
+
+    /**
+     * 查询模板文件详情
+     *
+     * @param string $templateId
+     * @return Collection|null
+     * @throws HttpException
+     */
+    public function queryPersonByThirdId(string $templateId): ?Collection
+    {
+        $url = '/v1/docTemplates/' . $templateId;
+        return $this->request('get', [$url]);
+    }
+
+
     /**
      * @param $pageNum
      * @param $pageSize

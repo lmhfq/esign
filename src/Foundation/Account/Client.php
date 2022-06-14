@@ -47,7 +47,6 @@ class Client extends BaseClient
     public function queryPersonByAccountId($accountId): ?Collection
     {
         $url = '/v1/accounts/' . $accountId;
-
         return $this->request('get', [$url]);
     }
 
