@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lmh\ESign\Core;
+namespace Lmh\ESign\Kernel;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -71,9 +71,9 @@ class Http
      * @param array $options
      *
      * @return ResponseInterface
-     *
+     * @throws GuzzleException
      */
-    public function get($url, array $options = []): ResponseInterface
+    public function get(string $url, array $options = []): ResponseInterface
     {
         return $this->request($url, 'GET', ['query' => $options]);
     }
@@ -98,9 +98,7 @@ class Http
         Log::debug('Client Request:', compact('url', 'method', 'options'));
 
         $options['handler'] = $this->getHandler();
-
         $response = $this->getClient()->request($method, $url, $options);
-
         Log::debug('API response:', [
             'Status' => $response->getStatusCode(),
             'Reason' => $response->getReasonPhrase(),

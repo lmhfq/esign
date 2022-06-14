@@ -16,6 +16,7 @@
         "ext-json": "*",
         "ext-openssl": "*",
         "ext-curl": "*",
+        "ext-redis": "*",
         "guzzlehttp/guzzle": "^6.5",
         "monolog/monolog": "^1.22 || ^2.0",
         "pimple/pimple": "^3.0"

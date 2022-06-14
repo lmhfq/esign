@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmh\ESign\Core;
+namespace Lmh\ESign\Kernel;
 
 use Lmh\ESign\Exceptions\HttpException;
 use Redis;
@@ -28,17 +28,20 @@ class AccessToken
      * @return bool|mixed
      * @throws HttpException
      */
-    public function getToken($forceRefresh = false)
+    public function getToken($forceRefresh = false): bool
     {
         $cacheKey = $this->getCacheKey();
-        $cached = $this->getCache()->get($cacheKey);
-
+        if ($this->getCache()) {
+            $cached = $this->getCache()->get($cacheKey);
+        }
         if ($forceRefresh || empty($cached)) {
             $token = $this->getTokenFromServer();
-            $this->getCache()->set($cacheKey, $token['data'][$this->tokenJsonKey], 60 * 100);
-            return $token['data'][$this->tokenJsonKey];
+            $tokenData = $token['data'][$this->tokenJsonKey];
+            if ($this->getCache()) {
+                $this->getCache()->set($cacheKey, $tokenData, 60 * 100);
+            }
+            return $tokenData;
         }
-
         return $cached;
     }
 
@@ -76,13 +79,11 @@ class AccessToken
         ];
 
         $http = $this->getHttp();
-
-        $token = $http->request($http->get(self::API_TOKEN_GET, $params));
-
+        $response = $http->get(self::API_TOKEN_GET, $params);
+        $token = $http->parseJSON($response);
         if (empty($token['data'][$this->tokenJsonKey])) {
             throw new HttpException('Request AccessToken fail. response: ' . json_encode($token, JSON_UNESCAPED_UNICODE));
         }
-
         return $token;
     }
 

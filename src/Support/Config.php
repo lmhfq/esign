@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lmh\ESign\Foundation;
+namespace Lmh\ESign\Support;
 
 
 use Lmh\ESign\Support\Collection;

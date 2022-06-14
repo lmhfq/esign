@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmh\ESign\Core;
+namespace Lmh\ESign\Kernel;
 
 use Closure;
 use GuzzleHttp\Middleware;

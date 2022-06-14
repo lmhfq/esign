@@ -3,9 +3,9 @@
 namespace Lmh\ESign;
 
 use Exception;
-use Lmh\ESign\Core\AccessToken;
-use Lmh\ESign\Core\BaseClient;
-use Lmh\ESign\Core\Http;
+use Lmh\ESign\Kernel\AccessToken;
+use Lmh\ESign\Kernel\BaseClient;
+use Lmh\ESign\Kernel\Http;
 use Lmh\ESign\Support\Log;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NullHandler;
@@ -37,16 +37,12 @@ class Application extends Container
     ];
 
 
-
-
-
-
     public function __construct(array $config = array())
     {
         parent::__construct($config);
 
         $this['config'] = function () use ($config) {
-            return new Foundation\Config($config);
+            return new Support\Config($config);
         };
         $this->registerBase();
         $this->registerProviders();
@@ -68,7 +64,7 @@ class Application extends Container
         /**
          * @var Redis $client
          */
-        $cache = $this['config']->get('cache', true);
+        $cache = $this['config']->get('cache', null);
         $this['access_token'] = function () use ($cache) {
             return new AccessToken(
                 $this['config']['app_id'],
@@ -114,7 +110,7 @@ class Application extends Container
 
     public function logConfiguration($config)
     {
-        $config = new Foundation\Config($config);
+        $config = new Support\Config($config);
 
         $keys = ['app_id', 'secret', 'open_platform.app_id', 'open_platform.secret', 'mini_program.app_id', 'mini_program.secret'];
         foreach ($keys as $key) {
