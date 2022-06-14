@@ -2,7 +2,7 @@
 
 namespace Lmh\ESign\Foundation\Template;
 
-use Lmh\ESign\Core\BaseClient;
+use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Exceptions\HttpException;
 use Lmh\ESign\Support\Collection;
 
@@ -16,7 +16,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryPersonByThirdId(string $templateId): ?Collection
+    public function queryTemplate(string $templateId): ?Collection
     {
         $url = '/v1/docTemplates/' . $templateId;
         return $this->request('get', [$url]);
@@ -24,13 +24,14 @@ class Client extends BaseClient
 
 
     /**
+     * 查询e签宝官网模板信息
      * @param $pageNum
      * @param $pageSize
      * @return Collection|null
      * @throws HttpException
      * @author lmh
      */
-    public function getFlowTemplates($pageNum, $pageSize): ?Collection
+    public function getFlowTemplateList($pageNum, $pageSize): ?Collection
     {
         $url = "/v3/flow-templates/basic-info";
         $params = [

@@ -2,7 +2,7 @@
 
 namespace Lmh\ESign\Foundation\File;
 
-use Lmh\ESign\Core\BaseClient;
+use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Exceptions\HttpException;
 use Lmh\ESign\Support\Collection;
 

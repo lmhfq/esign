@@ -221,7 +221,6 @@ abstract class BaseClient
             if (empty($contents['message'])) {
                 $contents['message'] = 'Unknown';
             }
-
             throw new HttpException($contents['message'], $contents['code']);
         }
     }

@@ -2,18 +2,17 @@
 
 namespace Lmh\ESign\Foundation\Organization;
 
-use Lmh\ESign\Core\BaseClient;
 use Lmh\ESign\Exceptions\HttpException;
+use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Support\Collection;
 
 class Client extends BaseClient
 {
 
     /**
-     * 创建机构账号
+     * 创建机构签署账号
      *
      * @param $thirdPartyUserId string 第三方平台标识, 如: 统一信用代码
-     * @param $creatorAccountId string 创建者 accountId
      * @param $name string 机构名称
      * @param $idType string 证件类型, 默认: CRED_ORG_USCC
      * @param $idNumber string 证件号
@@ -22,18 +21,21 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function createOrganizeAccount(string $thirdPartyUserId, string $creatorAccountId, string $name, string $idType, string $idNumber, $orgLegalIdNumber = null, $orgLegalName = null): ?Collection
+    public function createOrganizeAccount(string $thirdPartyUserId, string $name, string $idType, string $idNumber, $orgLegalIdNumber = null, $orgLegalName = null): ?Collection
     {
         $url = '/v1/organizations/createByThirdPartyUserId';
         $params = [
             'thirdPartyUserId' => $thirdPartyUserId,
-            'creator' => $creatorAccountId,
             'name' => $name,
             'idType' => $idType,
             'idNumber' => $idNumber,
-            'orgLegalIdNumber' => $orgLegalIdNumber,
-            'orgLegalName' => $orgLegalName,
         ];
+        if ($orgLegalIdNumber) {
+            $params['orgLegalIdNumber'] = $orgLegalIdNumber;
+        }
+        if ($orgLegalName) {
+            $params['orgLegalName'] = $orgLegalName;
+        }
 
         return $this->request('json', [$url, $params]);
     }
