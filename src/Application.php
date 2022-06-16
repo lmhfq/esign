@@ -3,6 +3,7 @@
 namespace Lmh\ESign;
 
 use Exception;
+use Lmh\ESign\Foundation\File\Client;
 use Lmh\ESign\Kernel\AccessToken;
 use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Kernel\Http;
@@ -18,11 +19,11 @@ use Redis;
  * Class Application
  *
  * @property AccessToken $access_token
- * @property \Lmh\ESign\Foundation\Account\Client $account
- * @property \Lmh\ESign\Foundation\File\Client $file
- * @property \Lmh\ESign\Foundation\SignFlow\Client $signflow
- * @property \Lmh\ESign\Foundation\Organization\Client $organizations
- * @property \Lmh\ESign\Foundation\Template\Client $template
+ * @property Foundation\Account\Client $account
+ * @property Client $file
+ * @property Foundation\SignFlow\Client $signflow
+ * @property Foundation\Organization\Client $organizations
+ * @property Foundation\Template\Client $template
  *
  * @package Lmh\ESign
  */
