@@ -25,10 +25,10 @@ class AccessToken
 
     /**
      * @param bool $forceRefresh
-     * @return bool|mixed
+     * @return false|mixed|string
      * @throws HttpException
      */
-    public function getToken($forceRefresh = false): bool
+    public function getToken($forceRefresh = false)
     {
         $cacheKey = $this->getCacheKey();
         if ($this->getCache()) {

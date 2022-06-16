@@ -2,8 +2,8 @@
 
 namespace Lmh\ESign\Foundation\SignFlow;
 
-use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Exceptions\HttpException;
+use Lmh\ESign\Kernel\BaseClient;
 use Lmh\ESign\Support\Collection;
 
 class Client extends BaseClient

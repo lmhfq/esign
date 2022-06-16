@@ -14,8 +14,8 @@ use Psr\Log\LoggerInterface;
  * @package Lmh\ESign\Support
  * User: lmh <lmh@weiyian.com>
  * Date: 2022/6/14
- * @method debug($message, array $context = array())
- * @method info($message, array $context = array())
+ * @method static debug($message, array $context = array())
+ * @method static info($message, array $context = array())
  */
 class Log
 {

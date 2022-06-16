@@ -65,20 +65,6 @@ class Http
     }
 
     /**
-     * GET request.
-     *
-     * @param string $url
-     * @param array $options
-     *
-     * @return ResponseInterface
-     * @throws GuzzleException
-     */
-    public function get(string $url, array $options = []): ResponseInterface
-    {
-        return $this->request($url, 'GET', ['query' => $options]);
-    }
-
-    /**
      * Make a request.
      *
      * @param string $url
@@ -155,6 +141,20 @@ class Http
         $this->client = $client;
 
         return $this;
+    }
+
+    /**
+     * GET request.
+     *
+     * @param string $url
+     * @param array $options
+     *
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    public function get(string $url, array $options = []): ResponseInterface
+    {
+        return $this->request($url, 'GET', ['query' => $options]);
     }
 
     /**
