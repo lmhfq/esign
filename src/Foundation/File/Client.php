@@ -15,7 +15,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryFileInfo(string $fileId): ?Collection
+    public function queryFileInfo(string $fileId):?array
     {
         $url = '/v1/files/' . $fileId;
         return $this->request('get', [$url]);
@@ -29,7 +29,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function createByTemplateId(string $templateId, $name, $simpleFormFields): ?Collection
+    public function createByTemplateId(string $templateId, $name, $simpleFormFields):?array
     {
         $url = '/v1/files/createByTemplate';
         $params = [

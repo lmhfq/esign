@@ -21,7 +21,7 @@ class Client extends BaseClient
      *
      * @throws HttpException
      */
-    public function createPersonAccount($thirdPartyUserId, $name, string $idType = 'CRED_PSN_CH_IDCARD', $idNumber = null, $mobile = null, $email = null): ?Collection
+    public function createPersonAccount($thirdPartyUserId, $name, string $idType = 'CRED_PSN_CH_IDCARD', $idNumber = null, $mobile = null, $email = null): ?array
     {
         $url = '/v1/accounts/createByThirdPartyUserId';
         $params = [
@@ -44,7 +44,7 @@ class Client extends BaseClient
      *
      * @throws HttpException
      */
-    public function queryPersonByAccountId($accountId): ?Collection
+    public function queryPersonByAccountId($accountId):?array
     {
         $url = '/v1/accounts/' . $accountId;
         return $this->request('get', [$url]);
@@ -57,7 +57,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryPersonByThirdId($thirdId): ?Collection
+    public function queryPersonByThirdId($thirdId):?array
     {
         $url = '/v1/accounts/getByThirdId';
         $params = [
@@ -79,7 +79,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function updatePersonByAccountId($accountId, $mobile = null, $email = null, $name = null, $idType = null, $idNumber = null): ?Collection
+    public function updatePersonByAccountId($accountId, $mobile = null, $email = null, $name = null, $idType = null, $idNumber = null):?array
     {
         $url = '/v1/accounts/' . $accountId;
         $params = [
@@ -101,7 +101,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function signAuth($accountId, $deadline = null): ?Collection
+    public function signAuth($accountId, $deadline = null):?array
     {
         $url = '/v1/signAuth/' . $accountId;
         $params = [
@@ -118,7 +118,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function cancelSignAuth($accountId): ?Collection
+    public function cancelSignAuth($accountId):?array
     {
         $url = "/v1/signAuth/{$accountId}";
 

@@ -16,7 +16,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryTemplate(string $templateId): ?Collection
+    public function queryTemplate(string $templateId):?array
     {
         $url = '/v1/docTemplates/' . $templateId;
         return $this->request('get', [$url]);
@@ -31,7 +31,7 @@ class Client extends BaseClient
      * @throws HttpException
      * @author lmh
      */
-    public function getFlowTemplateList($pageNum, $pageSize): ?Collection
+    public function getFlowTemplateList($pageNum, $pageSize):?array
     {
         $url = "/v3/flow-templates/basic-info";
         $params = [

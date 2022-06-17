@@ -81,10 +81,10 @@ abstract class BaseClient
      *
      * @param $method
      * @param array $args
-     * @return Collection|null
+     * @return array|null
      * @throws HttpException
      */
-    public function request($method, array $args): ?Collection
+    public function request($method, array $args): ?array
     {
         $http = $this->getHttp();
         $response = call_user_func_array([$http, $method], $args);

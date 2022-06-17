@@ -16,7 +16,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function createFlowOneStep(array $params): ?Collection
+    public function createFlowOneStep(array $params):?array
     {
         $url = '/api/v2/signflows/createFlowOneStep';
         return $this->request('json', [$url, $params]);
@@ -33,7 +33,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function createSignFlow($businessScene, $noticeDeveloperUrl = null, string $noticeType = '', $redirectUrl = '', $autoArchive = true): ?Collection
+    public function createSignFlow($businessScene, $noticeDeveloperUrl = null, string $noticeType = '', $redirectUrl = '', $autoArchive = true):?array
     {
         $url = '/v1/signflows';
         $params = [
@@ -59,7 +59,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function addDocuments($flowId, $fileId, $encryption = 0, $fileName = null, $filePassword = null): ?Collection
+    public function addDocuments($flowId, $fileId, $encryption = 0, $fileName = null, $filePassword = null):?array
     {
         $url = '/v1/signflows/' . $flowId . '/documents';
         $params = [
@@ -85,7 +85,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function addPlatformSign(string $flowId, $fileId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null): ?Collection
+    public function addPlatformSign(string $flowId, $fileId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null):?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/platformSign';
         $signFieldOne = [
@@ -125,7 +125,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function addAutoSign($flowId, $fileId, $authorizedAccountId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null): ?Collection
+    public function addAutoSign($flowId, $fileId, $authorizedAccountId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null):?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/autoSign';
         $signFieldOne = [
@@ -164,7 +164,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function addHandSign($flowId, $fileId, $signerAccountId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null): ?Collection
+    public function addHandSign($flowId, $fileId, $signerAccountId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null):?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/handSign';
         $signFieldOne = [
@@ -194,7 +194,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function startSignFlow(string $flowId): ?Collection
+    public function startSignFlow(string $flowId):?array
     {
         $url = '/v1/signflows/' . $flowId . '/start';
         return $this->request('put', [$url]);
@@ -210,7 +210,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function getExecuteUrl(string $flowId, $accountId, $orgId = null, $urlType = 0, $appScheme = null): ?Collection
+    public function getExecuteUrl(string $flowId, $accountId, $orgId = null, $urlType = 0, $appScheme = null):?array
     {
         $url = '/v1/signflows/' . $flowId . '/executeUrl';
         $params = [

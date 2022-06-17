@@ -21,7 +21,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function createOrganizeAccount(string $thirdPartyUserId, string $name, string $idType, string $idNumber, $orgLegalIdNumber = null, $orgLegalName = null): ?Collection
+    public function createOrganizeAccount(string $thirdPartyUserId, string $name, string $idType, string $idNumber, $orgLegalIdNumber = null, $orgLegalName = null):?array
     {
         $url = '/v1/organizations/createByThirdPartyUserId';
         $params = [
@@ -47,7 +47,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryOrganizeByOrgId(string $orgId): ?Collection
+    public function queryOrganizeByOrgId(string $orgId):?array
     {
         $url = '/v1/organizations/' . $orgId;
 
@@ -61,7 +61,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function queryOrganizeByThirdId($thirdId): ?Collection
+    public function queryOrganizeByThirdId($thirdId):?array
     {
         $url = '/v1/organizations/getByThirdId';
         $params = [
@@ -83,7 +83,7 @@ class Client extends BaseClient
      * @return Collection|null
      * @throws HttpException
      */
-    public function updateOrganizeByAccountId(string $orgId, $name = null, $idType = null, $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null): ?Collection
+    public function updateOrganizeByAccountId(string $orgId, $name = null, $idType = null, $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null):?array
     {
         $url = '/v1/organizations/' . $orgId;
         $params = [
@@ -107,7 +107,7 @@ class Client extends BaseClient
      * @throws HttpException
      * @author lmh
      */
-    public function queryGrantedSeals(string $orgId, $downloadFlag = true, $offset = 0, $size = 10): ?Collection
+    public function queryGrantedSeals(string $orgId, $downloadFlag = true, $offset = 0, $size = 10):?array
     {
         $url = '/v1/organizations/' . $orgId . '/granted/seals';
         $params = [
