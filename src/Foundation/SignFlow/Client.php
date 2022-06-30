@@ -8,15 +8,13 @@ use Lmh\ESign\Support\Collection;
 
 class Client extends BaseClient
 {
-
     /**
      * 一步发起签署
      *
      * @param array $params
      * @return Collection|null
-     * @throws HttpException
      */
-    public function createFlowOneStep(array $params):?array
+    public function createFlowOneStep(array $params): ?array
     {
         $url = '/api/v2/signflows/createFlowOneStep';
         return $this->request('json', [$url, $params]);
@@ -25,15 +23,14 @@ class Client extends BaseClient
     /**
      * 签署流程创建
      *
-     * @param $businessScene
-     * @param null $noticeDeveloperUrl
-     * @param string $noticeType
+     * @param string $businessScene
+     * @param string|null $noticeDeveloperUrl
+     * @param string $noticeType 通知方式，逗号分割，1-短信，2-邮件 。默认值1，
      * @param string $redirectUrl
      * @param bool $autoArchive
      * @return Collection|null
-     * @throws HttpException
      */
-    public function createSignFlow($businessScene, $noticeDeveloperUrl = null, string $noticeType = '', $redirectUrl = '', $autoArchive = true):?array
+    public function createSignFlow(string $businessScene, string $noticeDeveloperUrl = null, string $noticeType = '1', $redirectUrl = '', $autoArchive = true): ?array
     {
         $url = '/v1/signflows';
         $params = [
@@ -41,8 +38,8 @@ class Client extends BaseClient
             'businessScene' => $businessScene,
             'configInfo' => [
                 'noticeType' => $noticeType,
+                'noticeDeveloperUrl' => $noticeDeveloperUrl,
                 'redirectUrl' => $redirectUrl,
-                'noticeDeveloperUrl' => $noticeDeveloperUrl
             ]
         ];
         return $this->request('json', [$url, $params]);
@@ -57,9 +54,8 @@ class Client extends BaseClient
      * @param null $fileName
      * @param null $filePassword
      * @return Collection|null
-     * @throws HttpException
      */
-    public function addDocuments($flowId, $fileId, $encryption = 0, $fileName = null, $filePassword = null):?array
+    public function addDocuments($flowId, $fileId, $encryption = 0, $fileName = null, $filePassword = null): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/documents';
         $params = [
@@ -73,34 +69,31 @@ class Client extends BaseClient
     /**
      * 添加平台自动盖章签署区
      *
-     * @param $flowId
-     * @param $fileId
-     * @param $sealId
-     * @param $posPage
-     * @param $posX
-     * @param $posY
-     * @param $signDateBeanType
-     * @param $signDateBean
-     * @param $signType
+     * @param string $flowId
+     * @param string $fileId
+     * @param string $sealId
+     * @param array $posBean [
+     *   'posPage' => $posPage,
+     *   'posX' => $posX,
+     *   'posY' => $posY,
+     * ]
+     * @param int $signDateBeanType
+     * @param array|null $signDateBean
+     * @param int $signType 签署类型， 1-单页签署，2-骑缝签署，默认1
      * @return Collection|null
-     * @throws HttpException
+     * @see https://open.esign.cn/doc/detail?id=opendoc%2Fsaas_api%2Folgmg0_xi1khu&namespace=opendoc%2Fsaas_api
      */
-    public function addPlatformSign(string $flowId, $fileId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null):?array
+    public function addPlatformSign(string $flowId, string $fileId, string $sealId, array $posBean, $signDateBeanType = 0, ?array $signDateBean = null, int $signType = 1): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/platformSign';
         $signFieldOne = [
             'fileId' => $fileId,
             'sealId' => $sealId,
-            'posBean' => [
-                'posPage' => $posPage,
-                'posX' => $posX,
-                'posY' => $posY,
-            ],
+            'posBean' => $posBean,
             'signDateBeanType' => $signDateBeanType,
             'signDateBean' => $signDateBean,
             'signType' => $signType,
         ];
-
         $params = [
             'signfields' => [
                 $signFieldOne,
@@ -123,9 +116,8 @@ class Client extends BaseClient
      * @param null $signDateBean
      * @param null $signType
      * @return Collection|null
-     * @throws HttpException
      */
-    public function addAutoSign($flowId, $fileId, $authorizedAccountId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null):?array
+    public function addAutoSign($flowId, $fileId, $authorizedAccountId, $sealId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null, $signType = null): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/autoSign';
         $signFieldOne = [
@@ -153,32 +145,29 @@ class Client extends BaseClient
     /**
      * 添加手动盖章签署区
      *
-     * @param $flowId
-     * @param $fileId
-     * @param $signerAccountId
-     * @param $posPage
-     * @param $posX
-     * @param $posY
-     * @param $signDateBeanType
-     * @param $signDateBean
+     * @param string $flowId
+     * @param string $fileId
+     * @param string $signerAccountId
+     * @param array $posBean ['posPage' => $posPage,'posX' => $posX,'posY' => $posY,]
+     * @param string|null $authorizedAccountId 签约主体账号标识，即本次签署对应任务的归属方，如传入机构id，则签署完成后，本任务可在企业账号下进行管理，默认是签署操作人个人
+     * @param int $signDateBeanType 是否需要添加签署日期，默认0 0-禁止 1-必须 2-不限制
+     * @param array|null $signDateBean 签章日期信息，骑缝章默认不展示日期
      * @return Collection|null
-     * @throws HttpException
+     * @see https://open.esign.cn/doc/detail?id=opendoc%2Fsaas_api%2Fgcg9zw_gu3zvg&namespace=opendoc%2Fsaas_api
      */
-    public function addHandSign($flowId, $fileId, $signerAccountId, $posPage, $posX, $posY, $signDateBeanType = 0, $signDateBean = null):?array
+    public function addHandSign(string $flowId, string $fileId, string $signerAccountId, array $posBean, ?string $authorizedAccountId = null, int $signDateBeanType = 2, ?array $signDateBean = null): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/signfields/handSign';
         $signFieldOne = [
             'fileId' => $fileId,
             'signerAccountId' => $signerAccountId,
-            'posBean' => [
-                'posPage' => $posPage,
-                'posX' => $posX,
-                'posY' => $posY,
-            ],
+            'posBean' => $posBean,
             'signDateBeanType' => $signDateBeanType,
             'signDateBean' => $signDateBean,
         ];
-
+        if ($authorizedAccountId) {
+            $signFieldOne['authorizedAccountId'] = $authorizedAccountId;
+        }
         $params = [
             'signfields' => [
                 $signFieldOne,
@@ -192,9 +181,8 @@ class Client extends BaseClient
      *
      * @param $flowId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function startSignFlow(string $flowId):?array
+    public function startSignFlow(string $flowId): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/start';
         return $this->request('put', [$url]);
@@ -208,9 +196,8 @@ class Client extends BaseClient
      * @param int $urlType
      * @param null $appScheme
      * @return Collection|null
-     * @throws HttpException
      */
-    public function getExecuteUrl(string $flowId, $accountId, $orgId = null, $urlType = 0, $appScheme = null):?array
+    public function getExecuteUrl(string $flowId, $accountId, $orgId = null, $urlType = 0, $appScheme = null): ?array
     {
         $url = '/v1/signflows/' . $flowId . '/executeUrl';
         $params = [

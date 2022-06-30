@@ -13,9 +13,8 @@ class Client extends BaseClient
      *
      * @param string $fileId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function queryFileInfo(string $fileId):?array
+    public function queryFileInfo(string $fileId): ?array
     {
         $url = '/v1/files/' . $fileId;
         return $this->request('get', [$url]);
@@ -23,13 +22,13 @@ class Client extends BaseClient
 
     /**
      * 填充内容生成PDF
+     * 注意：E签宝官网获取的模板id，在通过模板创建文件的时候只支持输入项组件id+填充内容
      * @param $templateId
      * @param $name
      * @param $simpleFormFields
      * @return Collection|null
-     * @throws HttpException
      */
-    public function createByTemplateId(string $templateId, $name, $simpleFormFields):?array
+    public function createByTemplateId(string $templateId, $name, $simpleFormFields): ?array
     {
         $url = '/v1/files/createByTemplate';
         $params = [

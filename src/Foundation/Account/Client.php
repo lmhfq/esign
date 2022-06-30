@@ -3,7 +3,6 @@
 namespace Lmh\ESign\Foundation\Account;
 
 use Lmh\ESign\Kernel\BaseClient;
-use Lmh\ESign\Exceptions\HttpException;
 use Lmh\ESign\Support\Collection;
 
 class Client extends BaseClient
@@ -11,17 +10,15 @@ class Client extends BaseClient
     /**
      * 创建个人账号
      *
-     * @param $thirdPartyUserId
-     * @param $name
+     * @param string $thirdPartyUserId 创建个人账号的唯一标识。可将个人证件号、手机号、邮箱地址等作为此账号的唯一标识。
+     * @param string $name
+     * @param string|null $idNumber
+     * @param string|null $mobile
+     * @param string|null $email
      * @param $idType string 证件类型, 默认: CRED_PSN_CH_IDCARD
-     * @param $idNumber
-     * @param null $mobile
-     * @param null $email
      * @return Collection|null
-     *
-     * @throws HttpException
      */
-    public function createPersonAccount($thirdPartyUserId, $name, string $idType = 'CRED_PSN_CH_IDCARD', $idNumber = null, $mobile = null, $email = null): ?array
+    public function createPersonAccount(string $thirdPartyUserId, string $name, ?string $idNumber = null, ?string $mobile = null, ?string $email = null, string $idType = 'CRED_PSN_CH_IDCARD'): ?array
     {
         $url = '/v1/accounts/createByThirdPartyUserId';
         $params = [
@@ -30,34 +27,33 @@ class Client extends BaseClient
             'idType' => $idType,
             'idNumber' => $idNumber,
             'mobile' => $mobile,
-            'email' => $email,
         ];
-
+        if ($email) {
+            $params['email'] = $email;
+        }
         return $this->request('json', [$url, $params]);
     }
 
     /**
-     * 查询个人信息 By 账户id
+     * 查询个人信息By账户id
      *
      * @param $accountId
      * @return Collection|null
      *
-     * @throws HttpException
      */
-    public function queryPersonByAccountId($accountId):?array
+    public function queryPersonByAccountId($accountId): ?array
     {
         $url = '/v1/accounts/' . $accountId;
         return $this->request('get', [$url]);
     }
 
     /**
-     * 查询个人信息 By 第三方id
+     * 查询个人信息By第三方id
      *
      * @param $thirdId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function queryPersonByThirdId($thirdId):?array
+    public function queryPersonByThirdId($thirdId): ?array
     {
         $url = '/v1/accounts/getByThirdId';
         $params = [
@@ -77,9 +73,8 @@ class Client extends BaseClient
      * @param null $idType
      * @param null $idNumber
      * @return Collection|null
-     * @throws HttpException
      */
-    public function updatePersonByAccountId($accountId, $mobile = null, $email = null, $name = null, $idType = null, $idNumber = null):?array
+    public function updatePersonByAccountId($accountId, $mobile = null, $email = null, $name = null, $idType = null, $idNumber = null): ?array
     {
         $url = '/v1/accounts/' . $accountId;
         $params = [
@@ -99,9 +94,8 @@ class Client extends BaseClient
      * @param $accountId
      * @param string|null $deadline 授权截止时间, 格式为yyyy-MM-dd HH:mm:ss，默认无限期
      * @return Collection|null
-     * @throws HttpException
      */
-    public function signAuth($accountId, $deadline = null):?array
+    public function signAuth($accountId, $deadline = null): ?array
     {
         $url = '/v1/signAuth/' . $accountId;
         $params = [
@@ -116,9 +110,8 @@ class Client extends BaseClient
      *
      * @param $accountId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function cancelSignAuth($accountId):?array
+    public function cancelSignAuth($accountId): ?array
     {
         $url = "/v1/signAuth/{$accountId}";
 

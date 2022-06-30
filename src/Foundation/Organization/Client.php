@@ -14,14 +14,13 @@ class Client extends BaseClient
      *
      * @param $thirdPartyUserId string 第三方平台标识, 如: 统一信用代码
      * @param $name string 机构名称
-     * @param $idType string 证件类型, 默认: CRED_ORG_USCC
      * @param $idNumber string 证件号
-     * @param null $orgLegalIdNumber string 企业法人证件号
-     * @param null $orgLegalName string 企业法人名称
+     * @param string|null $orgLegalIdNumber string 企业法人证件号
+     * @param string|null $orgLegalName string 企业法人名称
+     * @param $idType string 证件类型, 默认: CRED_ORG_USCC 统一社会信用代码
      * @return Collection|null
-     * @throws HttpException
      */
-    public function createOrganizeAccount(string $thirdPartyUserId, string $name, string $idType, string $idNumber, $orgLegalIdNumber = null, $orgLegalName = null):?array
+    public function createOrganizeAccount(string $thirdPartyUserId, string $name, string $idNumber,?string $orgLegalIdNumber = null, ?string $orgLegalName = null, string $idType = 'CRED_ORG_USCC'): ?array
     {
         $url = '/v1/organizations/createByThirdPartyUserId';
         $params = [
@@ -45,9 +44,8 @@ class Client extends BaseClient
      *
      * @param $orgId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function queryOrganizeByOrgId(string $orgId):?array
+    public function queryOrganizeByOrgId(string $orgId): ?array
     {
         $url = '/v1/organizations/' . $orgId;
 
@@ -59,9 +57,8 @@ class Client extends BaseClient
      *
      * @param $thirdId
      * @return Collection|null
-     * @throws HttpException
      */
-    public function queryOrganizeByThirdId($thirdId):?array
+    public function queryOrganizeByThirdId($thirdId): ?array
     {
         $url = '/v1/organizations/getByThirdId';
         $params = [
@@ -81,9 +78,8 @@ class Client extends BaseClient
      * @param string|null $orgLegalIdNumber
      * @param string|null $orgLegalName
      * @return Collection|null
-     * @throws HttpException
      */
-    public function updateOrganizeByAccountId(string $orgId, $name = null, $idType = null, $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null):?array
+    public function updateOrganizeByAccountId(string $orgId, $name = null, $idType = null, $idNumber = null, $orgLegalIdNumber = null, $orgLegalName = null): ?array
     {
         $url = '/v1/organizations/' . $orgId;
         $params = [
@@ -104,10 +100,9 @@ class Client extends BaseClient
      * @param int $offset
      * @param int $size
      * @return Collection|null  是否返回印章图片下载地址，默认为truetrue-返回下载链接 false-不返回下载链接
-     * @throws HttpException
      * @author lmh
      */
-    public function queryGrantedSeals(string $orgId, $downloadFlag = true, $offset = 0, $size = 10):?array
+    public function queryGrantedSeals(string $orgId, $downloadFlag = true, $offset = 0, $size = 10): ?array
     {
         $url = '/v1/organizations/' . $orgId . '/granted/seals';
         $params = [
